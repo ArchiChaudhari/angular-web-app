@@ -8,6 +8,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = "hello-world-angular"
         DOCKER_TAG = "latest"
+        NPM_CACHE = '/tmp/.npm' // Set a custom npm cache directory
     }
 
     stages {
@@ -19,6 +20,7 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
+                sh 'npm config set cache $NPM_CACHE --global'
                 sh 'npm install'
             }
         }
