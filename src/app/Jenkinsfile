@@ -13,6 +13,23 @@ pipeline {
             }
         }
 
+        stage('Setup Node.js Environment') {
+            steps {
+                script {
+                    // Check if Node.js is installed; install if missing
+                    if (sh(returnStatus: true, script: 'command -v node') != 0) {
+                        echo "Node.js is not installed. Installing Node.js..."
+                        sh '''
+                            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                            sudo apt-get install -y nodejs
+                        '''
+                    } else {
+                        echo "Node.js is already installed."
+                    }
+                }
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
