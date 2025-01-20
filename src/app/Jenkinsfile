@@ -1,5 +1,9 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18-alpine' // Use Node.js 18 Docker image
+        }
+    }
 
     environment {
         DOCKER_IMAGE = "hello-world-angular"
@@ -10,23 +14,6 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 git 'https://github.com/ArchiChaudhari/angular-web-app.git'
-            }
-        }
-
-        stage('Setup Node.js Environment') {
-            steps {
-                script {
-                    // Check if Node.js is installed; install if missing
-                    if (sh(returnStatus: true, script: 'command -v node') != 0) {
-                        echo "Node.js is not installed. Installing Node.js..."
-                        sh '''
-                            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-                            apt-get install -y nodejs
-                        '''
-                    } else {
-                        echo "Node.js is already installed."
-                    }
-                }
             }
         }
 
