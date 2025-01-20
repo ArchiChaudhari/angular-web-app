@@ -21,7 +21,7 @@ pipeline {
                         echo "Node.js is not installed. Installing Node.js..."
                         sh '''
                             curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-                            sudo apt-get install -s -y nodejs
+                            apt-get install -y nodejs
                         '''
                     } else {
                         echo "Node.js is already installed."
